@@ -8,7 +8,7 @@ from gtts import gTTS
 import tempfile
 import speech_recognition as sr
 import plotly.graph_objects as go
-from datetime import datetime, timedelta, date  # Added 'date' to the import
+from datetime import datetime, timedelta, date
 import requests
 import random
 import google.generativeai as genai
@@ -73,7 +73,7 @@ def generate_stock_chart(ticker):
     return fig
 
 def get_news(query):
-    api_key = "55f8b079335a4cdda914e2a67621de7a" 
+    api_key = "55f8b079335a4cdda914e2a67621de7a"  # Replace with your actual News API key
     url = f"https://newsapi.org/v2/everything?q={query}&apiKey={api_key}&language=en&sortBy=publishedAt&pageSize=5"
     
     response = requests.get(url)
@@ -326,7 +326,7 @@ def main():
         st.subheader("Stock Data Inputs")
         option = st.text_input('Enter a Stock Symbol', value='SPY')
         option = option.upper()
-        today = date.today()  # Use date.today() instead of datetime.date.today()
+        today = date.today()
         duration = st.number_input('Enter the duration (days)', value=3000)
         before = today - timedelta(days=duration)
         start_date = st.date_input('Start Date', value=before)
@@ -367,10 +367,12 @@ def main():
         st.header("AI Financial Assistant Chat")
         chat_placeholder = st.empty()
 
+        # Moved st.chat_input outside of st.container and st.columns
+        user_input = st.chat_input("Ask about finances, stocks, or insurance:")
+        
+        # Speech button in a separate container
         with st.container():
             col1, col2 = st.columns([0.9, 0.1])
-            with col1:
-                user_input = st.chat_input("Ask about finances, stocks, or insurance:")
             with col2:
                 speak_button = st.button("🎤", key="speak_chat")
 
